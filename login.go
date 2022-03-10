@@ -26,14 +26,17 @@ func (c Login) Get(challenge string) (LoginRequest, error) {
 	return res, err
 }
 
-func (c Login) Accept(challenge string, request AcceptLoginRequest) (AcceptLoginRequest, error) {
-	var res AcceptLoginRequest
-	err := c.Api.Put("/oauth2/auth/requests/login/accept?login_challenge="+challenge, request, &res)
-	if err != nil {
-		return res, err
+func (c Login) Accept(challenge string, request AcceptLoginRequest) (string, error) {
+	var res struct {
+		RedirectTo string `json:"redirect_to"`
 	}
 
-	return res, err
+	err := c.Api.Put("/oauth2/auth/requests/login/accept?login_challenge="+challenge, request, &res)
+	if err != nil {
+		return res.RedirectTo, err
+	}
+
+	return res.RedirectTo, err
 }
 
 func (c Login) Reject(challenge string, request RejectRequest) (string, error) {
