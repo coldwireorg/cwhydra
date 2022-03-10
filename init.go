@@ -8,7 +8,7 @@ var (
 	AdminApi *Api
 )
 
-func Init(endpoint string, config Config) bool {
+func Init(config Config) bool {
 	api := New(config)
 
 	for {
