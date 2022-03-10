@@ -1,6 +1,10 @@
 # CW-Hydra
 ## Ory Hydra client for coldwire's purposes
 
+```sh
+go get codeberg.org/coldwire/cwhydra
+```
+
 ## Exemple
 ```go
 // Initialize API
@@ -15,7 +19,7 @@ api := cwhydra.New(cwhydra.Config{
 })
 
 log.Println("Creating a client named 'test'")
-create, err := cwhydra.ClientManager(api).Create(cwhydra.Oauth2Client{
+create, err := cwhydra.ClientManager(api).Create(cwhydra.OAuth2Client{
 	ClientName: "test",
 })
 if err != nil {

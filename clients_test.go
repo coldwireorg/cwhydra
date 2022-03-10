@@ -22,7 +22,7 @@ func TestClient(t *testing.T) {
 	})
 
 	log.Println("Creating a client named 'test'")
-	create, err := cwhydra.ClientManager(api).Create(cwhydra.Oauth2Client{
+	create, err := cwhydra.ClientManager(api).Create(cwhydra.OAuth2Client{
 		ClientName: "test",
 	})
 	if err != nil {
