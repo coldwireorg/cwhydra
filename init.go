@@ -2,6 +2,7 @@ package cwhydra
 
 import (
 	"log"
+	"time"
 )
 
 var (
@@ -20,6 +21,7 @@ func Init(config Config) bool {
 			return true
 		} else {
 			log.Println(err.Error())
+			time.Sleep(5 * time.Second)
 		}
 	}
 }
