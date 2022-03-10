@@ -27,9 +27,7 @@ func (c Logout) Get(challenge string) (LogoutResponse, error) {
 }
 
 func (c Logout) Accept(challenge string) (string, error) {
-	var res struct {
-		RedirectTo string `json:"redirect_to"`
-	}
+	var res Redirect
 
 	err := c.Api.Put("/oauth2/auth/requests/logout/accept?logout_challenge="+challenge, nil, &res)
 	if err != nil {
@@ -40,9 +38,7 @@ func (c Logout) Accept(challenge string) (string, error) {
 }
 
 func (c Logout) Reject(challenge string, request RejectRequest) (string, error) {
-	var res struct {
-		RedirectTo string `json:"redirect_to"`
-	}
+	var res Redirect
 
 	err := c.Api.Put("/oauth2/auth/requests/logout/reject?logout_challenge="+challenge, request, &res)
 	if err != nil {

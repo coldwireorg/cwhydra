@@ -185,3 +185,8 @@ type LogoutResponse struct {
 	// Subject is the user for whom the logout was request.
 	Subject string `json:"subject"`
 }
+
+/* REDIRECT */
+type Redirect struct {
+	RedirectTo string `json:"redirect_to"`
+}

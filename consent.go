@@ -6,7 +6,7 @@ type Consent struct {
 
 type ConsentInterface interface {
 	Get(challenge string) (ConsentRequest, error)
-	Accept(challenge string, request AcceptConsentRequest) (AcceptConsentRequest, error)
+	Accept(challenge string, request AcceptConsentRequest) (string, error)
 	Reject(challenge string, request RejectRequest) (string, error)
 }
 
@@ -26,20 +26,19 @@ func (c Consent) Get(challenge string) (ConsentRequest, error) {
 	return res, err
 }
 
-func (c Consent) Accept(challenge string, request AcceptConsentRequest) (AcceptConsentRequest, error) {
-	var res AcceptConsentRequest
+func (c Consent) Accept(challenge string, request AcceptConsentRequest) (string, error) {
+	var res Redirect
+
 	err := c.Api.Put("/oauth2/auth/requests/consent/accept?consent_challenge="+challenge, request, &res)
 	if err != nil {
-		return res, err
+		return res.RedirectTo, err
 	}
 
-	return res, err
+	return res.RedirectTo, err
 }
 
 func (c Consent) Reject(challenge string, request RejectRequest) (string, error) {
-	var res struct {
-		RedirectTo string `json:"redirect_to"`
-	}
+	var res Redirect
 
 	err := c.Api.Put("/oauth2/auth/requests/consent/reject?consent_challenge="+challenge, request, &res)
 	if err != nil {
