@@ -64,9 +64,6 @@ func (c Config) request(method string, endpoint string, body interface{}, respon
 		return err
 	}
 
-	// set endpoint
-	uri.Path = endpoint
-
 	// if there is a body convert is to json
 	if body != nil {
 		bdy, err = json.Marshal(body)
@@ -76,7 +73,7 @@ func (c Config) request(method string, endpoint string, body interface{}, respon
 	}
 
 	// create request
-	req, err := http.NewRequest(method, uri.String(), bytes.NewBuffer(bdy))
+	req, err := http.NewRequest(method, uri.String()+endpoint, bytes.NewBuffer(bdy))
 	if err != nil {
 		return err
 	}
